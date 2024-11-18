@@ -103,3 +103,32 @@ extension CryptoListViewController: UISearchResultsUpdating, UISearchBarDelegate
         self.navigationItem.searchController = nil
     }
 }
+
+/// Refresh Button Funcationality
+extension CryptoListViewController {
+    
+    func refershView(isTrue: Bool) {
+        let refreshButton = UIButton()
+        if isTrue {
+            refreshButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+            refreshButton.tintColor = .white
+            refreshButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+            refreshButton.setTitle(" Refresh ", for: .normal)
+            refreshButton.addTarget(self, action: #selector(getCoinFromAPI), for: .touchUpInside)
+            view.addSubview(refreshButton)
+            
+            setupLayoutForRefreshButton(refreshButton: refreshButton)
+        } else {
+            refreshButton.removeFromSuperview()
+        }
+    }
+    
+    func setupLayoutForRefreshButton(refreshButton: UIButton) {
+        let centerX = NSLayoutConstraint(item: refreshButton, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+        let centerY = NSLayoutConstraint(item: refreshButton, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
+        let height = NSLayoutConstraint(item: refreshButton, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 44)
+        refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addConstraints([centerX, centerY, height])
+    }
+    
+}

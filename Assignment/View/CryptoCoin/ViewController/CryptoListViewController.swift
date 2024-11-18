@@ -49,16 +49,21 @@ class CryptoListViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        
+        getCoinFromAPI()
+        self.view.backgroundColor = UIColor(named: "light_purple")
+    }
+    
+    @objc
+    func getCoinFromAPI() {
         viewModel.getCryptoCoin { isReponse in
-            if !isReponse {
-                /// Can add refresh button as wellin case of failure scenario.
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self.tableView.isHidden = !isReponse
+                self.refershView(isTrue: !isReponse)
+                if !isReponse {
                     self.showAlertMessage(title: "Oops", message: "Something went wrong. Please try again later.")
                 }
             }
         }
-        self.view.backgroundColor = UIColor(named: "light_purple")
     }
     
     private func setupNavigationBar () {
@@ -67,7 +72,6 @@ class CryptoListViewController: UIViewController {
         setupLeftBarItem()
         setupRightBarButtonItem()
     }
-    
     
     private func setupLeftBarItem() {
         let barLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 44))
@@ -158,6 +162,7 @@ class CryptoListViewController: UIViewController {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
             definesPresentationContext = true
+            setupCollectionView(sender: UIBarItem())
         }
     }
     

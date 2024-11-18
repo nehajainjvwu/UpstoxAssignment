@@ -162,7 +162,9 @@ class CryptoListViewController: UIViewController {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
             definesPresentationContext = true
-            setupCollectionView(sender: UIBarItem())
+            if showFilter {
+                setupCollectionView(sender: UIBarItem())
+            }
         }
     }
     
